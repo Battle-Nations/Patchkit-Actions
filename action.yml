@@ -1,0 +1,47 @@
+name: "Patchkit Actions"
+
+description: "Use Patchkit CLI tools in Github Actions to manage releases"
+
+branding:
+  icon: "arrow-up"
+  color: "gray-dark"
+
+inputs:
+  secret:
+    description: "Application secret"
+    required: true
+  api-key:
+    description: "User API key"
+    required: true
+  label:
+    description: "Version label"
+    required: true
+  files:
+    description: "Path to version files directory"
+    required: true
+  overwrite-draft:
+    description: "Should draft version be overwritten if it already exists"
+    required: false
+    default: 'false'
+
+runs:
+  using: "composite"
+  steps:
+
+    - run: echo "::set-output name=PATCHKIT_VERSION::$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/patchkit-net/patchkit-tools/releases/latest | cut -d'/' -f8)"
+      id: patchkit-version
+      shell: bash
+
+    - uses: knicknic/os-specific-run@v1
+      with:
+        macos: curl https://github.com/patchkit-net/patchkit-tools/releases/download/${{ steps.patchkit-version.outputs.PATCHKIT_VERSION }}/patchkit-tools-osx.zip -o patchkit-tools.zip
+        linux: curl https://github.com/patchkit-net/patchkit-tools/releases/download/${{ steps.patchkit-version.outputs.PATCHKIT_VERSION }}/patchkit-tools-linux-x86_64.zip -o patchkit-tools.zip
+        windows: curl https://github.com/patchkit-net/patchkit-tools/releases/download/${{ steps.patchkit-version.outputs.PATCHKIT_VERSION }}/patchkit-tools-x86_64-win32.zip -o patchkit-tools.zip
+        windowsShell: 'bash'
+
+    - run: unzip patchkit-tools.zip
+      shell: bash
+
+    - run: ls -a
+      shell: bash
+      
