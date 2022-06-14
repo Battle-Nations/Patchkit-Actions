@@ -34,9 +34,9 @@ runs:
 
     - uses: knicknic/os-specific-run@v1
       with:
-        macos: curl https://github.com/patchkit-net/patchkit-tools/releases/download/${{ steps.patchkit-version.outputs.PATCHKIT_VERSION }}/patchkit-tools-osx.zip -o patchkit-tools.zip
-        linux: curl https://github.com/patchkit-net/patchkit-tools/releases/download/${{ steps.patchkit-version.outputs.PATCHKIT_VERSION }}/patchkit-tools-linux-x86_64.zip -o patchkit-tools.zip
-        windows: curl https://github.com/patchkit-net/patchkit-tools/releases/download/${{ steps.patchkit-version.outputs.PATCHKIT_VERSION }}/patchkit-tools-x86_64-win32.zip -o patchkit-tools.zip
+        macos: curl -L https://github.com/patchkit-net/patchkit-tools/releases/download/${{ steps.patchkit-version.outputs.PATCHKIT_VERSION }}/patchkit-tools-osx.zip -o patchkit-tools.zip
+        linux: curl -L https://github.com/patchkit-net/patchkit-tools/releases/download/${{ steps.patchkit-version.outputs.PATCHKIT_VERSION }}/patchkit-tools-linux-x86_64.zip -o patchkit-tools.zip
+        windows: curl -L https://github.com/patchkit-net/patchkit-tools/releases/download/${{ steps.patchkit-version.outputs.PATCHKIT_VERSION }}/patchkit-tools-x86_64-win32.zip -o patchkit-tools.zip
         windowsShell: 'bash'
 
     - run: ls -a
