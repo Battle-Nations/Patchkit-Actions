@@ -44,18 +44,9 @@ runs:
     - run: unzip -q patchkit-tools.zip
       shell: bash
 
-    - name: Enable Aliasing
-      run: shopt -s expand_aliases
-      shell: bash
-
-    - name: Alias Patchkit tools
+    - name: Run Patchkit tools
       uses: knicknic/os-specific-run@v1
       with:
-        macos: alias patchkit-tools='./patchkit-tools'
-        linux: alias patchkit-tools='./patchkit-tools'
-        windows: alias patchkit-tools='./patchkit-tools.bat'
-        windowsShell: 'bash'
-
-    - name: Run Patchkit Tools
-      run: patchkit-tools make-version --secret "${{ github.event.inputs.secret }}" --api-key "${{ github.event.inputs.api-key }}" --label "${{ github.event.inputs.label }}" --files "${{ github.event.inputs.files }}" --overwrite-draft "${{ github.event.inputs.overwrite-draft }}"
-      shell: bash
+        macos: ./patchkit-tools make-version --secret "${{ github.event.inputs.secret }}" --api-key "${{ github.event.inputs.api-key }}" --label "${{ github.event.inputs.label }}" --files "${{ github.event.inputs.files }}" --overwrite-draft "${{ github.event.inputs.overwrite-draft }}"
+        linux: ./patchkit-tools make-version --secret "${{ github.event.inputs.secret }}" --api-key "${{ github.event.inputs.api-key }}" --label "${{ github.event.inputs.label }}" --files "${{ github.event.inputs.files }}" --overwrite-draft "${{ github.event.inputs.overwrite-draft }}"
+        windows: ./patchkit-tools make-version --secret "${{ github.event.inputs.secret }}" --api-key "${{ github.event.inputs.api-key }}" --label "${{ github.event.inputs.label }}" --files "${{ github.event.inputs.files }}" --overwrite-draft "${{ github.event.inputs.overwrite-draft }}"
