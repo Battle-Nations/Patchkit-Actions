@@ -39,9 +39,11 @@ runs:
         windows: curl https://github.com/patchkit-net/patchkit-tools/releases/download/${{ steps.patchkit-version.outputs.PATCHKIT_VERSION }}/patchkit-tools-x86_64-win32.zip -o patchkit-tools.zip
         windowsShell: 'bash'
 
+    - run: ls -a
+      shell: bash
+
     - run: unzip patchkit-tools.zip
       shell: bash
 
     - run: ls -a
       shell: bash
-      
