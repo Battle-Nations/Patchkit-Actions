@@ -47,6 +47,6 @@ runs:
     - name: Run Patchkit tools
       uses: knicknic/os-specific-run@v1
       with:
-        macos: ./patchkit-tools make-version --secret "${{ github.event.inputs.secret }}" --api-key "${{ github.event.inputs.api-key }}" --label "${{ github.event.inputs.label }}" --files "${{ github.event.inputs.files }}" --overwrite-draft "${{ github.event.inputs.overwrite-draft }}"
-        linux: ./patchkit-tools make-version --secret "${{ github.event.inputs.secret }}" --api-key "${{ github.event.inputs.api-key }}" --label "${{ github.event.inputs.label }}" --files "${{ github.event.inputs.files }}" --overwrite-draft "${{ github.event.inputs.overwrite-draft }}"
-        windows: ./patchkit-tools make-version --secret "${{ github.event.inputs.secret }}" --api-key "${{ github.event.inputs.api-key }}" --label "${{ github.event.inputs.label }}" --files "${{ github.event.inputs.files }}" --overwrite-draft "${{ github.event.inputs.overwrite-draft }}"
+        macos: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --label "${{ inputs.label }}" --files "${{ inputs.files }}" --overwrite-draft "${{ inputs.overwrite-draft }}"
+        linux: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --label "${{ inputs.label }}" --files "${{ inputs.files }}" --overwrite-draft "${{ inputs.overwrite-draft }}"
+        windows: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --label "${{ inputs.label }}" --files "${{ inputs.files }}" --overwrite-draft "${{ inputs.overwrite-draft }}"
