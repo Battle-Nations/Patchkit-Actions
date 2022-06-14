@@ -28,22 +28,33 @@ runs:
   using: "composite"
   steps:
 
-    - run: echo "::set-output name=PATCHKIT_VERSION::$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/patchkit-net/patchkit-tools/releases/latest | cut -d'/' -f8)"
+    - name: Get latest version tag
+      run: echo "::set-output name=PATCHKIT_VERSION::$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/patchkit-net/patchkit-tools/releases/latest | cut -d'/' -f8)"
       id: patchkit-version
       shell: bash
 
-    - uses: knicknic/os-specific-run@v1
+    - name: Download latest Patchkit Tools
+      uses: knicknic/os-specific-run@v1
       with:
         macos: curl -L https://github.com/patchkit-net/patchkit-tools/releases/download/${{ steps.patchkit-version.outputs.PATCHKIT_VERSION }}/patchkit-tools-osx.zip -o patchkit-tools.zip
         linux: curl -L https://github.com/patchkit-net/patchkit-tools/releases/download/${{ steps.patchkit-version.outputs.PATCHKIT_VERSION }}/patchkit-tools-linux-x86_64.zip -o patchkit-tools.zip
         windows: curl -L https://github.com/patchkit-net/patchkit-tools/releases/download/${{ steps.patchkit-version.outputs.PATCHKIT_VERSION }}/patchkit-tools-x86_64-win32.zip -o patchkit-tools.zip
         windowsShell: 'bash'
 
-    - run: ls -a
-      shell: bash
-
     - run: unzip patchkit-tools.zip
       shell: bash
 
-    - run: ls -a
+    - name: Alias Patchkit tools
+      uses: knicknic/os-specific-run@v1
+      with:
+        macos: alias patchkit-tools='./patchkit-tools'
+        linux: alias patchkit-tools='./patchkit-tools'
+        windows: alias patchkit-tools='./patchkit-tools.bat'
+        windowsShell: 'bash'
+
+    - run: patchkit-tools --help
+      shell: bash
+
+    - name: Run Patchkit Tools
+      run: patchkit-tools make-version --secret "${{ github.event.inputs.secret }}" --api-key "${{ github.event.inputs.api-key }}" --label "${{ github.event.inputs.label }}" --files "${{ github.event.inputs.files }}" --overwrite-draft "${{ github.event.inputs.overwrite-draft }}"
       shell: bash
