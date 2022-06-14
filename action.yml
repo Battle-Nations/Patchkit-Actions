@@ -41,7 +41,11 @@ runs:
         windows: curl -L https://github.com/patchkit-net/patchkit-tools/releases/download/${{ steps.patchkit-version.outputs.PATCHKIT_VERSION }}/patchkit-tools-x86_64-win32.zip -o patchkit-tools.zip
         windowsShell: 'bash'
 
-    - run: unzip patchkit-tools.zip
+    - run: unzip -q patchkit-tools.zip
+      shell: bash
+
+    - name: Enable Aliasing
+      run: shopt -s expand_aliases
       shell: bash
 
     - name: Alias Patchkit tools
@@ -51,9 +55,6 @@ runs:
         linux: alias patchkit-tools='./patchkit-tools'
         windows: alias patchkit-tools='./patchkit-tools.bat'
         windowsShell: 'bash'
-
-    - run: patchkit-tools --help
-      shell: bash
 
     - name: Run Patchkit Tools
       run: patchkit-tools make-version --secret "${{ github.event.inputs.secret }}" --api-key "${{ github.event.inputs.api-key }}" --label "${{ github.event.inputs.label }}" --files "${{ github.event.inputs.files }}" --overwrite-draft "${{ github.event.inputs.overwrite-draft }}"
