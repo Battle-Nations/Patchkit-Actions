@@ -1,0 +1,28 @@
+name: "Patchkit Actions - Publish"
+
+description: "Use Patchkit CLI tools in Github Actions to publish existing draft releases"
+
+branding:
+  icon: "arrow-up"
+  color: "gray-dark"
+
+inputs:
+  secret:
+    description: "Application secret"
+    required: true
+  api-key:
+    description: "User API key"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Patchkit Tools
+      uses: ./setup
+
+    - name: Run Patchkit Tools Publish
+      uses: knicknic/os-specific-run@v1
+      with:
+        macos: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --draft
+        linux: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --draft
+        windows: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --draft

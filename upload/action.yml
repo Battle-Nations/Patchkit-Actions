@@ -1,0 +1,45 @@
+name: "Patchkit Actions - Upload"
+
+description: "Use Patchkit CLI tools in Github Actions to upload draft releases and optionally publish them"
+
+branding:
+  icon: "arrow-up"
+  color: "gray-dark"
+
+inputs:
+  secret:
+    description: "Application secret"
+    required: true
+  api-key:
+    description: "User API key"
+    required: true
+  label:
+    description: "Version label"
+    required: true
+  files:
+    description: "Path to version files directory"
+    required: true
+  changelog-file:
+    description: "Path to changelog file"
+    required: true
+  overwrite-draft:
+    description: "Should draft version be overwritten if it already exists"
+    required: true
+    default: 'false'
+  publish:
+    description: "Should draft version be published"
+    required: true
+    default: 'false'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Patchkit Tools
+      uses: ./setup
+
+    - name: Run Patchkit Tools Upload
+      uses: knicknic/os-specific-run@v1
+      with:
+        macos: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --label "${{ inputs.label }}" --files "${{ inputs.files }}" --overwrite-draft "${{ inputs.overwrite-draft }} --changelog-file "${{ inputs.changelog-file }}" --publish "${{ inputs.publish }}"
+        linux: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --label "${{ inputs.label }}" --files "${{ inputs.files }}" --overwrite-draft "${{ inputs.overwrite-draft }}" --changelog-file "${{ inputs.changelog-file }}" --publish "${{ inputs.publish }}"
+        windows: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --label "${{ inputs.label }}" --files "${{ inputs.files }}" --overwrite-draft "${{ inputs.overwrite-draft }}" --changelog-file "${{ inputs.changelog-file }}" --publish "${{ inputs.publish }}"
