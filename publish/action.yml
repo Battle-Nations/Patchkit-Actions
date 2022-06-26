@@ -18,7 +18,7 @@ runs:
   using: "composite"
   steps:
     - name: Setup Patchkit Tools
-      uses: ./setup
+      uses: Battle-Nations/Patchkit-Actions/setup@v2-pre
 
     - name: Run Patchkit Tools Publish
       uses: knicknic/os-specific-run@v1
