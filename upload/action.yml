@@ -26,10 +26,6 @@ inputs:
     description: "Should draft version be overwritten if it already exists"
     required: true
     default: 'false'
-  publish:
-    description: "Should draft version be published"
-    required: true
-    default: 'false'
 
 runs:
   using: "composite"
@@ -40,6 +36,6 @@ runs:
     - name: Run Patchkit Tools Upload
       uses: knicknic/os-specific-run@v1
       with:
-        macos: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --label "${{ inputs.label }}" --files "${{ inputs.files }}" --overwrite-draft "${{ inputs.overwrite-draft }} --changelog-file "${{ inputs.changelog-file }}" --publish "${{ inputs.publish }}"
-        linux: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --label "${{ inputs.label }}" --files "${{ inputs.files }}" --overwrite-draft "${{ inputs.overwrite-draft }}" --changelog-file "${{ inputs.changelog-file }}" --publish "${{ inputs.publish }}"
-        windows: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --label "${{ inputs.label }}" --files "${{ inputs.files }}" --overwrite-draft "${{ inputs.overwrite-draft }}" --changelog-file "${{ inputs.changelog-file }}" --publish "${{ inputs.publish }}"
+        macos: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --label "${{ inputs.label }}" --files "${{ inputs.files }}" --overwrite-draft "${{ inputs.overwrite-draft }}" --changelog-file "${{ inputs.changelog-file }}"
+        linux: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --label "${{ inputs.label }}" --files "${{ inputs.files }}" --overwrite-draft "${{ inputs.overwrite-draft }}" --changelog-file "${{ inputs.changelog-file }}"
+        windows: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --label "${{ inputs.label }}" --files "${{ inputs.files }}" --overwrite-draft "${{ inputs.overwrite-draft }}" --changelog-file "${{ inputs.changelog-file }}"
