@@ -23,6 +23,6 @@ runs:
     - name: Run Patchkit Tools Publish
       uses: knicknic/os-specific-run@v1
       with:
-        macos: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --draft
-        linux: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --draft
-        windows: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --draft
+        macos: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --draft --wait
+        linux: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --draft --wait
+        windows: ./patchkit-tools make-version --secret "${{ inputs.secret }}" --api-key "${{ inputs.api-key }}" --draft --wait
